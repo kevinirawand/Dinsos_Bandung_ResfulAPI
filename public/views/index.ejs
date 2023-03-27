@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Dinsos Bandung</title>
+   <link rel="stylesheet" href="/assets/styles/micromodal.css">
+</head>
+
+<body>
+   <link href="https://vjs.zencdn.net/7.2.3/video-js.css" rel="stylesheet">
+   <link rel="stylesheet" href="/assets/styles/leaflet.min.css">
+   <link rel="stylesheet" href="/assets/styles/leaflet.css">
+   <div class="container">
+      <div class="pull-left">
+         <h2>Maps</h2>
+      </div>
+      <div class="row" id="mymaps" style="z-index: -1">
+         <div class="card m-2 col-12">
+            <div class="card-header">
+               <h3 class="card-title" id="test">Point Monitoring</h3>
+            </div>
+            <div class="card-body">
+               <div id="map-marker" style="height: 400px;"></div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         
+      
+      </div>
+   </div>
+
+
+   <!-- SET MICROMODAL -->
+
+   <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div
+          class="modal__container"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-1-title"
+        >
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-1-title">
+              Micromodal
+            </h2>
+            <button class="modal__close" aria-label="Close modal" data-micromodal-close/>
+          </header>
+          <main class="modal__content" id="modal-1-content">
+            
+            
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="card">
+                     <div class="card-header">
+                        <h3 class="card-title">Simpang Lima</h3>
+                     </div>
+                     <div class="card-body">
+                        <video id="video1" width="100%" controls></video>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+          </main>
+          <footer class="modal__footer">
+            <button class="modal__btn modal__btn-primary">Continue</button>
+            <button
+              class="modal__btn"
+              data-micromodal-close
+              aria-label="Close this dialog window"
+            >
+              Close
+            </button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+   <!-- END SET MICROMODAL -->
+
+
+
+   <!-- JQUERY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+   <!-- MAP REQUIREMENT -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+
+   <!-- MODAL REQUIREMENT -->
+   <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+   <!-- <script src="/assets/script/micromodal.js"></script> -->
+
+
+
+   <!-- HLS REQUIREMENT -->
+   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+
+
+    <% let results = cctvLocationArr %>
+    <% for (const location in results) {
+      console.info(results[location])
+    } %>
+
+    <!-- PISAHKAN ENDPOINT UNTUTK VIEW DAN GET DATA NYA -->
+
+   <script>
+      let locations = [
+  {
+    "id_lokasi": "1",
+    "nama_lokasi": "SP Soekarno Hatta - Gedebage",
+    "lat_lokasi": "-6.93703",
+    "lon_lokasi": "107.692679"
+  },
+  {
+    "id_lokasi": "2",
+    "nama_lokasi": "SP Soekarno Hatta - Ibrahim Adjie",
+    "lat_lokasi": "-6.945427",
+    "lon_lokasi": "107.641883"
+  },
+  {
+    "id_lokasi": "3",
+    "nama_lokasi": "SP Soekarno Hatta - Buahbatu",
+    "lat_lokasi": "-6.948012",
+    "lon_lokasi": "107.633519"
+  },
+  {
+    "id_lokasi": "4",
+    "nama_lokasi": "SP Soekarno Hatta - Batununggal",
+    "lat_lokasi": "-6.949489",
+    "lon_lokasi": "107.626006"
+  },
+  {
+    "id_lokasi": "5",
+    "nama_lokasi": "SP Soekarno Hatta - Moch. Toha",
+    "lat_lokasi": "-6.948338",
+    "lon_lokasi": "107.609389"
+  },
+  {
+    "id_lokasi": "6",
+    "nama_lokasi": "SP Soekarno Hatta - Inhopteng",
+    "lat_lokasi": "-6.947878",
+    "lon_lokasi": "107.602571"
+  },
+  {
+    "id_lokasi": "7",
+    "nama_lokasi": "SP Soekarno Hatta -  Cibaduyut",
+    "lat_lokasi": "-6.94728",
+    "lon_lokasi": "107.595227"
+  },
+  {
+    "id_lokasi": "8",
+    "nama_lokasi": "SP Soekarno Hatta -  Kopo",
+    "lat_lokasi": "-6.945582",
+    "lon_lokasi": "107.58961"
+  },
+  {
+    "id_lokasi": "9",
+    "nama_lokasi": "SP Soekarno Hatta -  Pasar Caringin",
+    "lat_lokasi": "-6.94311",
+    "lon_lokasi": "107.584429"
+  },
+  {
+    "id_lokasi": "10",
+    "nama_lokasi": "SP Soekarno Hatta -  Pasir Koja",
+    "lat_lokasi": "-6.930429",
+    "lon_lokasi": "107.576033"
+  },
+  {
+    "id_lokasi": "11",
+    "nama_lokasi": "SP Soekarno Hatta -  Cibeureum",
+    "lat_lokasi": "-6.917283",
+    "lon_lokasi": "107.574366"
+  },
+  {
+    "id_lokasi": "12",
+    "nama_lokasi": "SP Sudirman -  Jamika",
+    "lat_lokasi": "-6.918823",
+    "lon_lokasi": "107.586506"
+  },
+  {
+    "id_lokasi": "13",
+    "nama_lokasi": "SP Sudirman -  Gardujati",
+    "lat_lokasi": "-6.920126",
+    "lon_lokasi": "107.598345"
+  },
+  {
+    "id_lokasi": "14",
+    "nama_lokasi": "SP Sudirman -  Otista",
+    "lat_lokasi": "-6.920816",
+    "lon_lokasi": "107.604102"
+  },
+  {
+    "id_lokasi": "15",
+    "nama_lokasi": "SP Asia Afrika -  Tamblong",
+    "lat_lokasi": "-6.921806",
+    "lon_lokasi": "107.611913"
+  },
+  {
+    "id_lokasi": "16",
+    "nama_lokasi": "SP Asia Afrika -   Sp Lima",
+    "lat_lokasi": "-6.922399",
+    "lon_lokasi": "107.617551"
+  },
+  {
+    "id_lokasi": "17",
+    "nama_lokasi": "SP A Yani - Gudang Utara",
+    "lat_lokasi": "-6.917192",
+    "lon_lokasi": "107.627341"
+  },
+  {
+    "id_lokasi": "18",
+    "nama_lokasi": "SP A Yani - Laswi",
+    "lat_lokasi": "-6.915761",
+    "lon_lokasi": "107.629992"
+  },
+  {
+    "id_lokasi": "19",
+    "nama_lokasi": "SP A Yani - Supratman",
+    "lat_lokasi": "-6.913462",
+    "lon_lokasi": "107.634428"
+  },
+  {
+    "id_lokasi": "20",
+    "nama_lokasi": "SP Djunjunan - Tol Pasteur",
+    "lat_lokasi": "-6.892164",
+    "lon_lokasi": "107.581369"
+  },
+  {
+    "id_lokasi": "21",
+    "nama_lokasi": "SP Pasir Kaliki - Tjokroaminoto",
+    "lat_lokasi": "-6.900283",
+    "lon_lokasi": "107.597443"
+  },
+  {
+    "id_lokasi": "22",
+    "nama_lokasi": "SP Pasteur - Cipaganti",
+    "lat_lokasi": "-6.900291",
+    "lon_lokasi": "107.602294"
+  },
+  {
+    "id_lokasi": "23",
+    "nama_lokasi": "SP Pasteur - Cihampelas",
+    "lat_lokasi": "-6.900245",
+    "lon_lokasi": "107.604242"
+  },
+  {
+    "id_lokasi": "24",
+    "nama_lokasi": "SP Pasteur - Tamansari",
+    "lat_lokasi": "-6.898188",
+    "lon_lokasi": "107.609552"
+  },
+  {
+    "id_lokasi": "25",
+    "nama_lokasi": "SP Dago - Cikapayang",
+    "lat_lokasi": "-6.898954",
+    "lon_lokasi": "107.61269"
+  },
+  {
+    "id_lokasi": "26",
+    "nama_lokasi": "SP Dago - Sulanjana",
+    "lat_lokasi": "-6.900167",
+    "lon_lokasi": "107.612536"
+  },
+  {
+    "id_lokasi": "27",
+    "nama_lokasi": "SP Merdeka - Juanda",
+    "lat_lokasi": "-6.907004",
+    "lon_lokasi": "107.610599"
+  },
+  {
+    "id_lokasi": "29",
+    "nama_lokasi": "SP Surapati - Sentot Alibasyah (Telkom)",
+    "lat_lokasi": "-6.899543",
+    "lon_lokasi": "107.627126"
+  },
+  {
+    "id_lokasi": "30",
+    "nama_lokasi": "SP Riau - Trunojoyo",
+    "lat_lokasi": "-6.906969",
+    "lon_lokasi": "107.612732"
+  },
+  {
+    "id_lokasi": "31",
+    "nama_lokasi": "SP Riau - Banda",
+    "lat_lokasi": "-6.906133",
+    "lon_lokasi": "107.616826"
+  },
+  {
+    "id_lokasi": "32",
+    "nama_lokasi": "SP Riau - Lombok",
+    "lat_lokasi": "-6.905945",
+    "lon_lokasi": "107.621375"
+  },
+  {
+    "id_lokasi": "33",
+    "nama_lokasi": "SP Riau - Cihapit",
+    "lat_lokasi": "-6.907493",
+    "lon_lokasi": "107.623308"
+  },
+  {
+    "id_lokasi": "34",
+    "nama_lokasi": "SP Riau - Aceh",
+    "lat_lokasi": "-6.910156",
+    "lon_lokasi": "107.626138"
+  },
+  {
+    "id_lokasi": "35",
+    "nama_lokasi": "SP Riau - Anggrek",
+    "lat_lokasi": "-6.912698",
+    "lon_lokasi": "107.628617"
+  },
+  {
+    "id_lokasi": "36",
+    "nama_lokasi": "SP Phh Mustofa - Cikutra",
+    "lat_lokasi": "-6.899872",
+    "lon_lokasi": "107.643426"
+  },
+  {
+    "id_lokasi": "37",
+    "nama_lokasi": "SP Phh Mustofa -  Cimuncang",
+    "lat_lokasi": "-6.901719",
+    "lon_lokasi": "107.649846"
+  },
+  {
+    "id_lokasi": "38",
+    "nama_lokasi": "SP Phh Mustofa - Pahlawan",
+    "lat_lokasi": "-6.89775",
+    "lon_lokasi": "107.634197"
+  },
+  {
+    "id_lokasi": "39",
+    "nama_lokasi": "SP Phh Mustofa -  Padasuka",
+    "lat_lokasi": "-6.901942",
+    "lon_lokasi": "107.65357"
+  },
+  {
+    "id_lokasi": "40",
+    "nama_lokasi": "SP Cicaheum",
+    "lat_lokasi": "-6.902065",
+    "lon_lokasi": "107.655038"
+  },
+  {
+    "id_lokasi": "41",
+    "nama_lokasi": "SP Ujung Berung - Jl Rumah Sakit\n",
+    "lat_lokasi": "-6.914055",
+    "lon_lokasi": "107.69941"
+  },
+  {
+    "id_lokasi": "42",
+    "nama_lokasi": "Ruas Jalan Riau (Martadinata)",
+    "lat_lokasi": "-6.906835",
+    "lon_lokasi": "107.613074"
+  },
+  {
+    "id_lokasi": "43",
+    "nama_lokasi": "Merdeka - Aceh",
+    "lat_lokasi": "-6.909809",
+    "lon_lokasi": "107.610527"
+  },
+  {
+    "id_lokasi": "50",
+    "nama_lokasi": "Ruas Sudirman - Otista",
+    "lat_lokasi": "-6.920567",
+    "lon_lokasi": "107.602618"
+  },
+  {
+    "id_lokasi": "51",
+    "nama_lokasi": "Ruas Sudirman - Gardujati",
+    "lat_lokasi": "-6.92015",
+    "lon_lokasi": "107.599097"
+  },
+  {
+    "id_lokasi": "52",
+    "nama_lokasi": "SP Malabar - Gatsu",
+    "lat_lokasi": "-6.923789",
+    "lon_lokasi": "107.624261"
+  },
+  {
+    "id_lokasi": "53",
+    "nama_lokasi": "SP Lingkar - Gatsu",
+    "lat_lokasi": "-6.924541",
+    "lon_lokasi": "107.627712"
+  },
+  {
+    "id_lokasi": "54",
+    "nama_lokasi": "SP Lingkar - Talaga Bodas",
+    "lat_lokasi": "-6.929531",
+    "lon_lokasi": "107.62647"
+  },
+  {
+    "id_lokasi": "55",
+    "nama_lokasi": "SP Lingkar - Martanegara",
+    "lat_lokasi": "-6.932602",
+    "lon_lokasi": "107.625751"
+  },
+  {
+    "id_lokasi": "56",
+    "nama_lokasi": "SP Lingkar - Buah Batu",
+    "lat_lokasi": "-6.936933",
+    "lon_lokasi": "107.622727"
+  },
+  {
+    "id_lokasi": "57",
+    "nama_lokasi": "SP Lingkar - Sriwijaya",
+    "lat_lokasi": "-6.93789",
+    "lon_lokasi": "107.612768"
+  },
+  {
+    "id_lokasi": "58",
+    "nama_lokasi": "SP Lingkar - M Ramdan",
+    "lat_lokasi": "-6.937607",
+    "lon_lokasi": "107.609122"
+  },
+  {
+    "id_lokasi": "59",
+    "nama_lokasi": "SP BKR - M Toha",
+    "lat_lokasi": "-6.937506",
+    "lon_lokasi": "107.606205"
+  },
+  {
+    "id_lokasi": "60",
+    "nama_lokasi": "SP BKR - Otista",
+    "lat_lokasi": "-6.937332",
+    "lon_lokasi": "107.603032"
+  },
+  {
+    "id_lokasi": "61",
+    "nama_lokasi": "SP Tjokroaminoto - Pajajaran (Istana Plaza)",
+    "lat_lokasi": "-6.906687",
+    "lon_lokasi": "107.59856"
+  },
+  {
+    "id_lokasi": "62",
+    "nama_lokasi": "SP Cihampelas - Ciumbuleuit",
+    "lat_lokasi": "-6.883331",
+    "lon_lokasi": "107.604912"
+  },
+  {
+    "id_lokasi": "63",
+    "nama_lokasi": "SP Djuanda - Dipatiukur",
+    "lat_lokasi": "-6.885209",
+    "lon_lokasi": "107.613712"
+  },
+  {
+    "id_lokasi": "64",
+    "nama_lokasi": "SP Abdurahman Saleh - Pajajaran ",
+    "lat_lokasi": "-6.906807",
+    "lon_lokasi": "107.587681"
+  }
+]
+
+      // console.info(locations);
+      // for (location in locations) {
+      // }
+
+      // for (const location in locations) {
+      //    console.info(location);
+      // }
+   
+      
+// $(documen).ready(() => {
+      //    $.get('http://localhost:1337/cctv/cctv-location', (data) => {
+
+      //       // console.info(data);
+            
+      //      
+      // });
+
+
+      var mymap = L.map('map-marker').setView([-6.9034495, 107.6431575], 10);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         maxZoom: 18,
+         attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+         id: 'mapbox.streets'
+      }).addTo(mymap);
+
+
+      for (var i = 0; i < locations.length; i++) {
+         marker = new L.marker([locations[i].lat_lokasi, locations[i].lon_lokasi])
+         .addTo(mymap);
+      }
+
+      function customPopup() {
+         // $.ajax() 
+         MicorModal.init();
+         MicroModal.show('modal-1');
+      };
+
+      mymap.eachLayer((l) => {
+         l.on('click', customPopup);
+
+         l.on('mouseover', function() {
+            const getMarkerLocation = l.getLatLng();
+
+            let locationName = "";
+            let lat_location = "";
+            let lon_location = "";
+            for (const location in locations) {
+               if (getMarkerLocation.lat == locations[location].lat_lokasi) {
+                  locationName = locations[location].nama_lokasi;
+                  lat_location = locations[location].lat_lokasi;
+                  lon_location = locations[location].lon_lokasi;
+               }
+            }
+
+            l.bindPopup(locationName).openPopup();
+         })
+      });
+   // });
+      
+   </script>
+
+   <script>
+      if (Hls.isSupported()) {
+         var video = document.getElementById('video');
+         var hls = new Hls();
+         hls.loadSource('https://atcs-dishub.bandung.go.id:1990/PasirKoja/index.m3u8');
+         hls.attachMedia(video);
+         hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play();
+         });
+      }
+      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+      // This is using the built-in support of the plain video element, without using hls.js.
+      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+         video.src = 'https://atcs-dishub.bandung.go.id:1990/Buahbatu/index.m3u8';
+         video.addEventListener('canplay', function () {
+            video.play();
+         });
+      }
+
+      if (Hls.isSupported()) {
+         var video1 = document.getElementById('video1');
+         var hls1 = new Hls();
+         hls1.loadSource('https://atcs-dishub.bandung.go.id:1990/Cibeureum/index.m3u8');
+         hls1.attachMedia(video1);
+         hls1.on(Hls.Events.MANIFEST_PARSED, function () {
+            video1.play();
+         });
+      }
+      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+      // This is using the built-in support of the plain video element, without using hls.js.
+      else if (video1.canPlayType('application/vnd.apple.mpegurl')) {
+         video1.src = 'https://atcs-dishub.bandung.go.id:1990/TolPasteur/index.m3u8';
+         video1.addEventListener('canplay', function () {
+            video1.play();
+         });
+      }
+      if (Hls.isSupported()) {
+         var video1 = document.getElementById('video2');
+         var hls1 = new Hls();
+         hls1.loadSource('http://45.118.114.26:80/camera/Samsat.m3u8');
+         hls1.attachMedia(video1);
+         hls1.on(Hls.Events.MANIFEST_PARSED, function () {
+            video1.play();
+         });
+      }
+      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+      // This is using the built-in support of the plain video element, without using hls.js.
+      else if (video1.canPlayType('application/vnd.apple.mpegurl')) {
+         video1.src = 'https://atcs-dishub.bandung.go.id:1990/TolPasteur/index.m3u8';
+         video1.addEventListener('canplay', function () {
+            video1.play();
+         });
+      }
+      if (Hls.isSupported()) {
+         var video1 = document.getElementById('video3');
+         var hls1 = new Hls();
+         hls1.loadSource('https://pelindung.bandung.go.id:3443/video/HIKSVISION/DrDjunjunanBTCdua.m3u8');
+         hls1.attachMedia(video1);
+         hls1.on(Hls.Events.MANIFEST_PARSED, function () {
+            video1.play();
+         });
+      }
+      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+      // This is using the built-in support of the plain video element, without using hls.js.
+      else if (video1.canPlayType('application/vnd.apple.mpegurl')) {
+         video1.src = 'https://atcs-dishub.bandung.go.id:1990/TolPasteur/index.m3u8';
+         video1.addEventListener('canplay', function () {
+            video1.play();
+         });
+      }
+      if (Hls.isSupported()) {
+         var video1 = document.getElementById('video4');
+         var hls1 = new Hls();
+         hls1.loadSource('https://atcs-dishub.bandung.go.id:1990/Cikapayang1/index.m3u8');
+         hls1.attachMedia(video1);
+         hls1.on(Hls.Events.MANIFEST_PARSED, function () {
+            video1.play();
+         });
+      }
+      // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+      // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+      // This is using the built-in support of the plain video element, without using hls.js.
+      else if (video1.canPlayType('application/vnd.apple.mpegurl')) {
+         video1.src = 'https://atcs-dishub.bandung.go.id:1990/TolPasteur/index.m3u8';
+         video1.addEventListener('canplay', function () {
+            video1.play();
+         });
+      }
+   </script>
+</body>
+
+</html>

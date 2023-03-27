@@ -1,0 +1,25 @@
+POST http://localhost:1337/cctv/cctv-location
+Content-Type: application/json
+
+{
+   "nama_lokasi": "SP Soekarno Hatta -  Cibaduyut",
+   "latitude": "-6.94728",
+   "longitude": "107.595227"
+}
+
+
+###
+POST http://localhost:1337/cctv/cctv-location/list
+Content-Type: application/json
+
+{
+   "id_cctv_lokasi": 67,
+   "stream": "https://atcs-dishub.bandung.go.id:1990/PajajaranBarat/index.m3u8"
+}
+
+
+###
+GET http://localhost:1337/cctv/cctv-location/list/-6.898954&107.61269
+###
+GET http://localhost:1337/cctv/cctv-location/list
+

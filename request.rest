@@ -1,0 +1,25 @@
+GET http://localhost:1337/users/
+Content-Type: application/json
+
+###
+POST http://localhost:1337/users/signup
+Content-Type: application/json
+
+{
+   "username": "kevin_test",
+   "password": "cekcek",
+   "passwordConfirmation": "cekcek"
+} 
+
+###
+
+POST https://atcs-dishub.bandung.go.id/ajax/cctv-info
+Content-Type: application/json
+
+{
+   "id": 1
+}
+
+
+###
+GET https://atcs-dishub.bandung.go.id:1990/Samsat/index.m3u8
