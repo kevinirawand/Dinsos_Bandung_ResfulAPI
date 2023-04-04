@@ -12,6 +12,14 @@ export const findOneCctvLocation = async (nama_lokasi) => {
    });
 }
 
+export const findOneCctvLocationById = async (id_cctv_lokasi) => {
+   return await CctvLocationModel.findOne({
+      where: {
+         id_cctv_lokasi: id_cctv_lokasi
+      }
+   });
+}
+
 export const createCctvLocation = async (credentials) => {
    const cctvLokasi = await CctvLocationModel.create(credentials);
 
@@ -61,11 +69,13 @@ export const getAllCctvList = async () => {
 }
 
 export const getAllCctvListById = async (id_cctv_lokasi) => {
-   const result = CctvListModel.findAll({
+   const result = await CctvListModel.findAll({
       where: {
          id_cctv_lokasi: id_cctv_lokasi
       }
    });
+
+   console.info(result);
 
    return result;
 }

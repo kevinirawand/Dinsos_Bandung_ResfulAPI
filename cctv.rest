@@ -7,19 +7,55 @@ Content-Type: application/json
    "longitude": "107.595227"
 }
 
+###
+GET http://103.250.10.149:1337/cctv/cctv-location
+
+
+
+
+
+
+
+
+
+
 
 ###
-POST http://localhost:1337/cctv/cctv-location/list
+POST http://localhost:1337/cctv/cctv-location/67/list
 Content-Type: application/json
 
 {
-   "id_cctv_lokasi": 67,
+   "nama_cctv": "TEST",
    "stream": "https://atcs-dishub.bandung.go.id:1990/PajajaranBarat/index.m3u8"
 }
 
+###
+GET http://localhost:1337/cctv/cctv-location/11/list
+Content-Type: application/json
 
 ###
-GET http://localhost:1337/cctv/cctv-location/list/-6.898954&107.61269
+GET http://localhost:1337/cctv/cctv-location/67/list/
+
+
+
+
+
 ###
-GET http://localhost:1337/cctv/cctv-location/list
+
+
+
+
+
+###
+GET https://pelindung.bandung.go.id:8443/api/cek
+
+
+###
+GET http://localhost:1337/cctv/cctv-location/seeder
+
+###
+GET http://localhost:1337/cctv/cctv-list/seeder
+
+###
+GET http://localhost:1337/cctv/cctv-location/11
 
